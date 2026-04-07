@@ -1,0 +1,158 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre_eje": "Eje 1",
+        "nombre_oficial": "Unidos las Delicias",
+        "nombre_zona": "Zona Alta"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-64.631406, 10.189292],
+            [-64.606132, 10.207384],
+            [-64.611059, 10.208884],
+            [-64.623558, 10.207279],
+            [-64.631406, 10.189292]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre_eje": "Eje 2",
+        "nombre_oficial": "María Teresa Del Toro",
+        "nombre_zona": "Zona Alta"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-64.603151, 10.202107],
+            [-64.604315, 10.203295],
+            [-64.606033, 10.204060],
+            [-64.603151, 10.202107]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre_eje": "Eje 3",
+        "nombre_oficial": "Gran Mariscal De Ayacucho",
+        "nombre_zona": "Zona Alta"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-64.606033, 10.204060],
+            [-64.632500, 10.186500],
+            [-64.632000, 10.186000],
+            [-64.606033, 10.204060]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre_eje": "Eje 4",
+        "nombre_oficial": "Ezequiel Zamora",
+        "nombre_zona": "Zona Pozuelos"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-64.635000, 10.182000],
+            [-64.635500, 10.182200],
+            [-64.635000, 10.182200],
+            [-64.635000, 10.182000]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre_eje": "Eje 5",
+        "nombre_oficial": "El Legado De Chávez",
+        "nombre_zona": "Zona Rural"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-64.605500, 10.175500],
+            [-64.605000, 10.175000],
+            [-64.604500, 10.175500],
+            [-64.605500, 10.175500]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre_eje": "Eje 6",
+        "nombre_oficial": "Ciudad Sotillo",
+        "nombre_zona": "Zona Rural"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-64.595500, 10.185500],
+            [-64.595000, 10.185000],
+            [-64.594500, 10.185500],
+            [-64.595500, 10.185500]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre_eje": "Eje 7",
+        "nombre_oficial": "Bahía De Pozuelos en Revolución",
+        "nombre_zona": "Zona Baja"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-64.638000, 10.221000],
+            [-64.638500, 10.221500],
+            [-64.638000, 10.221500],
+            [-64.638000, 10.221000]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nombre_eje": "Eje 8",
+        "nombre_oficial": "José Antonio Anzoátegui 25",
+        "nombre_zona": "Zona Baja"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-64.624500, 10.197500],
+            [-64.625000, 10.198000],
+            [-64.624500, 10.198000],
+            [-64.624500, 10.197500]
+          ]
+        ]
+      }
+    }
+  ]
+}

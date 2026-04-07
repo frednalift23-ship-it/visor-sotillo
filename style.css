@@ -1,0 +1,44 @@
+/* Fondo principal de la aplicación */
+[data-testid="stAppViewContainer"] {
+    background-color: #101E2E !important;
+}
+[data-testid="stHeader"] {
+    background-color: transparent !important;
+}
+/* Forzar todos los textos a blanco/gris claro */
+html, body, [class*="css"], .stMarkdown, p, span, h1, h2, h3, h4, h5, h6, label {
+    color: #E2E8F0 !important;
+}
+/* Estilo de la barra de búsqueda (Selectbox) */
+div[data-baseweb="select"] > div {
+    background-color: #242F49 !important;
+    border: 1px solid #384358 !important;
+    color: #FFFFFF !important;
+    border-radius: 8px !important;
+}
+/* Icono de la flecha en el selectbox */
+div[data-baseweb="select"] svg {
+    fill: #FFA586 !important;
+}
+/* Botón de volver al mapa */
+button[data-baseweb="button"] {
+    background-color: #242F49 !important;
+    color: #FFA586 !important;
+    border: 1px solid #FFA586 !important;
+    border-radius: 8px !important;
+    font-weight: bold !important;
+}
+button[data-baseweb="button"]:hover {
+    background-color: #FFA586 !important;
+    color: #101E2E !important;
+    border-color: #FFA586 !important;
+}
+/* Alertas de información vacía */
+[data-testid="stAlert"] {
+    background-color: #242F49 !important;
+    border: 1px dashed #384358 !important;
+    color: #FFA586 !important;
+}
+/* Ocultar elementos nativos de Streamlit */
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
