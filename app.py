@@ -5,6 +5,7 @@ import geopandas as gpd
 import pandas as pd 
 import os
 import base64
+from streamlit_gsheets import GSheetsConnection
 
 # Configuración de la página
 st.set_page_config(page_title="Visor Territorial Sotillo", layout="wide")
@@ -56,7 +57,11 @@ df_trabajadores = pd.DataFrame()
 lista_cedulas = ["Seleccione una cédula..."]
 
 try:
-    df_trabajadores = pd.read_excel(RUTA_EXCEL)
+    conn = st.connection("gsheets", type=GSheetsConnection)
+    # Leemos la hoja. El ttl="5m" hace que el mapa busque cambios cada 5 minutos
+    df_trabajadores = conn.read(ttl="5m")
+    
+    #  limpieza de datos 
     df_trabajadores = df_trabajadores.fillna('N/A') # rellena vacíos
     df_trabajadores.columns = ['Nombre', 'Cedula', 'Cargo', 'Telefono', 'Sector', 'Direccion', 'Eje', 'Comuna']
     
@@ -69,8 +74,9 @@ try:
     
     cedulas_limpias = sorted(df_trabajadores['Cedula'].unique().tolist())
     lista_cedulas.extend(cedulas_limpias)
-except Exception:
-    pass 
+except Exception as e:
+    st.error(f"Error al conectar con Google Sheets: {e}")
+    st.stop()
 
 #  Base de Datos de Comunas
 COMUNAS_POR_EJE = {
