@@ -105,6 +105,11 @@ def obtener_bytes_foto(cedula):
         
         # 4. Buscamos la foto usando tu Folder ID
         query = f"name='{cedula}.jpg' and '{FOLDER_ID_FOTOS}' in parents and trashed=false"
+        # prueba de error------------------------
+        results = drive_service.files().list(q=query, fields="files(id, name)").execute()
+        files = results.get('files', [])
+        #------------------------------------
+
         results = drive_service.files().list(q=query, fields="files(id, name)").execute()
         files = results.get('files', [])
         
