@@ -83,15 +83,31 @@ try:
 except Exception as e:
     st.error(f"Error al conectar con Google Sheets: {e}")
     st.stop()
+
 # --- FUNCION QUE BUSCA LAS FOTO DE LOS TRABAJADORES ---
-@st.cache_data(ttl="1h") # --- CACHEAMOS LAS FOTOS POR UNA HORA PARA MEJOR RENDIMIENTO---
+
+@st.cache_data(ttl="1h") 
 def obtener_bytes_foto(cedula):
     try:
-        conn = st.connection("gsheets", type=GSheetsConnection) 
-        drive_service = conn._get_service('drive', version='v3')
+        from google.oauth2 import service_account # Herramienta directa de llaves
+        
+        # 1. Sacamos las llaves directamente de tu caja fuerte (Secrets)
+        info_llaves = dict(st.secrets["connections"]["gsheets"])
+        
+        # 2. Le damos permiso explícito para leer Google Drive
+        creds = service_account.Credentials.from_service_account_info(
+            info_llaves,
+            scopes=['https://www.googleapis.com/auth/drive.readonly']
+        )
+        
+        # 3. Construimos el robot
+        drive_service = build('drive', 'v3', credentials=creds)
+        
+        # 4. Buscamos la foto usando tu Folder ID
         query = f"name='{cedula}.jpg' and '{FOLDER_ID_FOTOS}' in parents and trashed=false"
         results = drive_service.files().list(q=query, fields="files(id, name)").execute()
         files = results.get('files', [])
+        
         if files:
             file_id = files[0]['id']
             request = drive_service.files().get_media(fileId=file_id)
@@ -101,11 +117,13 @@ def obtener_bytes_foto(cedula):
             while done is False:
                 status, done = downloader.next_chunk()
             return file.getvalue()
-        return None
+            
+        return None # No encontró la foto, pero no hubo error de sistema
+        
     except Exception as e:
+        # ¡EL MICRÓFONO! Si algo técnico falla, lo mostrará en pantalla
+        st.error(f"Error del robot buscando foto de {cedula}: {e}")
         return None
-
-
 
 #  Base de Datos de Comunas
 COMUNAS_POR_EJE = {
