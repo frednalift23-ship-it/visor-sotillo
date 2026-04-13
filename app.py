@@ -6,9 +6,15 @@ import pandas as pd
 import os
 import base64
 from streamlit_gsheets import GSheetsConnection
+from googleapiclient.discovery import build
+from googleapiclient.http import MediaIoBaseDownload
+import io
 
 # Configuración de la página
 st.set_page_config(page_title="Visor Territorial Sotillo", layout="wide")
+
+# --- NUEVO: LA DIRECCIÓN DE LA CARPETA DE FOTOS ---
+FOLDER_ID_FOTOS = '1m5P3in3Si_fNYNN9nnkmdo1iKRROPCJ_'
 
 # Rutas de archivo
 DIRECTORIO_ACTUAL = os.path.dirname(os.path.abspath(__file__))
@@ -17,7 +23,7 @@ RUTA_EXCEL = os.path.join(DIRECTORIO_ACTUAL, "datos", "trabajadores.xlsx")
 RUTA_LOGO = os.path.join(DIRECTORIO_ACTUAL, "datos","logo_alcaldia.jpeg")
 RUTA_CSS = os.path.join(DIRECTORIO_ACTUAL, "style.css") 
 
-# --- MAGIA UI/UX: CARGAR ESTILOS CSS EXTERNOS ---
+# ---  CARGAR ESTILOS CSS EXTERNOS ---
 try:
     with open(RUTA_CSS, "r") as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
@@ -77,6 +83,29 @@ try:
 except Exception as e:
     st.error(f"Error al conectar con Google Sheets: {e}")
     st.stop()
+# --- FUNCION QUE BUSCA LAS FOTO DE LOS TRABAJADORES ---
+@st.cache_data(ttl="1h") # --- CACHEAMOS LAS FOTOS POR UNA HORA PARA MEJOR RENDIMIENTO---
+def obtener_bytes_foto(cedula):
+    try:
+        conn = st.connection("gsheets", type=GSheetsConnection) 
+        drive_service = conn._get_service('drive', version='v3')
+        query = f"name='{cedula}.jpg' and '{FOLDER_ID_FOTOS}' in parents and trashed=false"
+        results = drive_service.files().list(q=query, fields="files(id, name)").execute()
+        files = results.get('files', [])
+        if files:
+            file_id = files[0]['id']
+            request = drive_service.files().get_media(fileId=file_id)
+            file = io.BytesIO()
+            downloader = MediaIoBaseDownload(file, request)
+            done = False
+            while done is False:
+                status, done = downloader.next_chunk()
+            return file.getvalue()
+        return None
+    except Exception as e:
+        return None
+
+
 
 #  Base de Datos de Comunas
 COMUNAS_POR_EJE = {
@@ -360,6 +389,17 @@ with col_info:
                 telefono = trabajador.get('Telefono', 'N/A')
                 sector = trabajador.get('Sector', 'N/A')
                 direccion = trabajador.get('Direccion', 'N/A')
+
+                # --- CONFIGURACION DE LAS FOTOS---
+                bytes_foto = obtener_bytes_foto(cedula)
+                if bytes_foto:
+                    # Convertimos las piezas (bytes) a código que el HTML entienda
+                    b64_foto = base64.b64encode(bytes_foto).decode()
+                   
+                    img_html = f'<img src="data:image/jpeg;base64,{b64_foto}" style="width: 70px; height: 70px; border-radius: 50%; float: right; border: 2px solid #FFA586; object-fit: cover; margin-left: 10px;">'
+                else:
+                    img_html = ''
+                # ------------------------
                 
                 if st.session_state['trabajador_resaltado'] == cedula:
                     borde_estilo = "border: 2px solid #EB1A2B; background-color: #1A2235;"
@@ -444,6 +484,17 @@ with col_info:
                 telefono = trabajador.get('Telefono', 'N/A')
                 sector = trabajador.get('Sector', 'N/A')
                 direccion = trabajador.get('Direccion', 'N/A')
+
+                # --- CONFIGURACION DE LAS FOTOS---
+                bytes_foto = obtener_bytes_foto(cedula)
+                if bytes_foto:
+                    # Convertimos las piezas (bytes) a código que el HTML entienda
+                    b64_foto = base64.b64encode(bytes_foto).decode()
+                   
+                    img_html = f'<img src="data:image/jpeg;base64,{b64_foto}" style="width: 70px; height: 70px; border-radius: 50%; float: right; border: 2px solid #FFA586; object-fit: cover; margin-left: 10px;">'
+                else:
+                    img_html = ''
+                # ------------------------
                 
                 if st.session_state['trabajador_resaltado'] == cedula:
                     borde_estilo = "border: 2px solid #EB1A2B; background-color: #1A2235;"
