@@ -444,13 +444,14 @@ with col_info:
                     color_nombre = "#FFA586"
                     etiqueta_resaltado = ""
                 
-                # --- NUEVO DISEÑO: FORMATO A PRUEBA DE INDENTACIÓN ---
+               # --- NUEVO DISEÑO: FORMATO A PRUEBA DE INDENTACIÓN (NOMBRES COMPLETOS) ---
                 html_tarjeta = (
                     f'<div style="padding: 15px; border-radius: 8px; {borde_estilo} box-shadow: 0 4px 6px rgba(0,0,0,0.2); margin-bottom: 15px;">'
                     f'<div style="display: flex; gap: 15px; align-items: flex-start;">'
                     f'<div style="display: flex; flex-direction: column; align-items: center;">{img_html}</div>'
                     f'<div style="flex-grow: 1; min-width: 0;">'
-                    f'<h5 style="margin: 0 0 8px 0; color: {color_nombre}; font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{nombre} {etiqueta_resaltado}</h5>'
+                    # Aquí quitamos el nowrap y el ellipsis, y añadimos un line-height para que si el nombre usa dos líneas, se vea ordenado
+                    f'<h5 style="margin: 0 0 8px 0; color: {color_nombre}; font-size: 16px; line-height: 1.3;">{nombre} {etiqueta_resaltado}</h5>'
                     f'<div style="font-size: 13px; color: #FFFFFF; margin-bottom: 5px;">'
                     f'<span style="display: block; margin-bottom: 3px;"><b style="color:#A0AEC0;">C.I.:</b> {cedula}</span>'
                     f'<span style="display: block; margin-bottom: 3px;"><b style="color:#A0AEC0;">Cargo:</b> {cargo}</span>'
@@ -539,14 +540,15 @@ with col_info:
                     borde_estilo = "border: 1px solid #384358; background-color: #242F49;"
                     color_nombre = "#FFA586"
                     etiqueta_resaltado = ""
-                
-                # --- NUEVO DISEÑO: FORMATO A PRUEBA DE INDENTACIÓN ---
+              
+                # --- NUEVO DISEÑO: FORMATO A PRUEBA DE INDENTACIÓN (NOMBRES COMPLETOS) ---
                 html_tarjeta = (
                     f'<div style="padding: 15px; border-radius: 8px; {borde_estilo} box-shadow: 0 4px 6px rgba(0,0,0,0.2); margin-bottom: 15px;">'
                     f'<div style="display: flex; gap: 15px; align-items: flex-start;">'
                     f'<div style="display: flex; flex-direction: column; align-items: center;">{img_html}</div>'
                     f'<div style="flex-grow: 1; min-width: 0;">'
-                    f'<h5 style="margin: 0 0 8px 0; color: {color_nombre}; font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{nombre} {etiqueta_resaltado}</h5>'
+                    # Aquí quitamos el nowrap y el ellipsis, y añadimos un line-height para que si el nombre usa dos líneas, se vea ordenado
+                    f'<h5 style="margin: 0 0 8px 0; color: {color_nombre}; font-size: 16px; line-height: 1.3;">{nombre} {etiqueta_resaltado}</h5>'
                     f'<div style="font-size: 13px; color: #FFFFFF; margin-bottom: 5px;">'
                     f'<span style="display: block; margin-bottom: 3px;"><b style="color:#A0AEC0;">C.I.:</b> {cedula}</span>'
                     f'<span style="display: block; margin-bottom: 3px;"><b style="color:#A0AEC0;">Cargo:</b> {cargo}</span>'
