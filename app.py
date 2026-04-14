@@ -238,9 +238,14 @@ with col_mapa:
         lat_centro = sum(c['lat'] for c in comunas_del_eje) / len(comunas_del_eje)
         lon_centro = sum(c['lon'] for c in comunas_del_eje) / len(comunas_del_eje)
         zoom_inicial = 14
+# Diseño exacto de Google Maps
+    mapa_sotillo = folium.Map(
+        location=[lat_centro, lon_centro], 
+        zoom_start=zoom_inicial, 
+        tiles="https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}",
+        attr="Google"
+    )
 
-# diseño oscuro solamente del mapa
-    mapa_sotillo = folium.Map(location=[lat_centro, lon_centro], zoom_start=zoom_inicial, tiles="CartoDB dark_matter")
     estilo_tooltip = "background-color: #242F49; color: #FFFFFF; border: 1px solid #FFA586; padding: 10px; border-radius: 5px; font-family: sans-serif;"
 #--------------------- estructura y logicas del mapa con ejes y sus comunas
     try:
