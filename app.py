@@ -86,7 +86,7 @@ except Exception as e:
 
 # --- FUNCION QUE BUSCA LAS FOTO DE LOS TRABAJADORES ---
 
-@st.cache_data(ttl="1h") 
+# @st.cache_data(ttl="1h") 
 def obtener_bytes_foto(cedula):
     try:
         from google.oauth2 import service_account # Herramienta directa de llaves
@@ -102,13 +102,17 @@ def obtener_bytes_foto(cedula):
         
         # 3. Construimos el robot
         drive_service = build('drive', 'v3', credentials=creds)
-        
+
         # 4. Buscamos la foto usando tu Folder ID
         query = f"name='{cedula}.jpg' and '{FOLDER_ID_FOTOS}' in parents and trashed=false"
-        # prueba de error------------------------
         results = drive_service.files().list(q=query, fields="files(id, name)").execute()
         files = results.get('files', [])
-        #------------------------------------
+        
+        # --- EL CHISMOSO (ESTO ES LO QUE IMPRIMIRÁ EN PANTALLA) ---
+        st.warning(f"🔍 Buscando archivo: {cedula}.jpg")
+        st.info(f"📂 Archivos que encontró Drive: {files}")
+        # ----------------------------------------------------------
+    
 
         results = drive_service.files().list(q=query, fields="files(id, name)").execute()
         files = results.get('files', [])
