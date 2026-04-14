@@ -104,15 +104,15 @@ def obtener_bytes_foto(cedula):
         drive_service = build('drive', 'v3', credentials=creds)
 
         # 4. Buscamos la foto usando tu Folder ID
-        query = f"name='{cedula}.jpg' and '{FOLDER_ID_FOTOS}' in parents and trashed=false"
+        query = f"'{FOLDER_ID_FOTOS}' in parents and trashed=false"
         results = drive_service.files().list(q=query, fields="files(id, name)").execute()
         files = results.get('files', [])
-        
-        # --- EL CHISMOSO (ESTO ES LO QUE IMPRIMIRÁ EN PANTALLA) ---
-        st.warning(f"🔍 Buscando archivo: {cedula}.jpg")
-        st.info(f"📂 Archivos que encontró Drive: {files}")
+
+        # --- EL CHISMOSO MAESTRO ---
+        st.warning("🔍 Escaneando TODO el contenido de la carpeta secreta...")
+        st.info(f"📂 El robot ve estos archivos: {files}")
         # ----------------------------------------------------------
-    
+        
 
         results = drive_service.files().list(q=query, fields="files(id, name)").execute()
         files = results.get('files', [])
