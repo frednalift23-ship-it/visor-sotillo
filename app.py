@@ -86,31 +86,40 @@ except Exception as e:
 
 # --- FUNCION QUE BUSCA LAS FOTO DE LOS TRABAJADORES ---
 
-# @st.cache_data(ttl="1h") 
+@st.cache_data(ttl="1h") 
 def obtener_bytes_foto(cedula):
     try:
-        from google.oauth2 import service_account # Herramienta directa de llaves
+        from google.oauth2 import service_account 
         
-        # 1. Sacamos las llaves directamente de tu caja fuerte (Secrets)
         info_llaves = dict(st.secrets["connections"]["gsheets"])
-        
-        # 2. Le damos permiso explícito para leer Google Drive
         creds = service_account.Credentials.from_service_account_info(
             info_llaves,
             scopes=['https://www.googleapis.com/auth/drive.readonly']
         )
         
-        # 3. Construimos el robot
         drive_service = build('drive', 'v3', credentials=creds)
-
-        # 4. Buscamos la foto usando tu Folder ID
-        query = f"'{FOLDER_ID_FOTOS}' in parents and trashed=false"
+        
+        # --- EL ARREGLO MÁGICO ---
+        # Ahora el robot busca la cédula sola, con .jpg, con .jpeg o con .png
+        query = f"(name='{cedula}' or name='{cedula}.jpg' or name='{cedula}.jpeg' or name='{cedula}.png') and '{FOLDER_ID_FOTOS}' in parents and trashed=false"
+        
         results = drive_service.files().list(q=query, fields="files(id, name)").execute()
         files = results.get('files', [])
-
-        # --- EL CHISMOSO MAESTRO ---
-        st.warning("🔍 Escaneando TODO el contenido de la carpeta secreta...")
-        st.info(f"📂 El robot ve estos archivos: {files}")
+        
+        if files:
+            file_id = files[0]['id']
+            request = drive_service.files().get_media(fileId=file_id)
+            file = io.BytesIO()
+            downloader = MediaIoBaseDownload(file, request)
+            done = False
+            while done is False:
+                status, done = downloader.next_chunk()
+            return file.getvalue()
+            
+        return None 
+        
+    except Exception as e:
+        return None
         # ----------------------------------------------------------
         
 
