@@ -426,15 +426,15 @@ with col_info:
                 sector = trabajador.get('Sector', 'N/A')
                 direccion = trabajador.get('Direccion', 'N/A')
 
-                # --- CONFIGURACION DE LAS FOTOS---
+                # --- CONFIGURACION DE LAS FOTOS ---
                 bytes_foto = obtener_bytes_foto(cedula)
                 if bytes_foto:
                     # Convertimos las piezas (bytes) a código que el HTML entienda
                     b64_foto = base64.b64encode(bytes_foto).decode()
-                   
-                    img_html = f'<img src="data:image/jpeg;base64,{b64_foto}" style="width: 70px; height: 70px; border-radius: 50%; float: right; border: 2px solid #FFA586; object-fit: cover; margin-left: 10px;">'
+                    img_html = f'<img src="data:image/jpeg;base64,{b64_foto}" style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid #FFA586; object-fit: cover; flex-shrink: 0;">'
                 else:
-                    img_html = ''
+                    # Foto por defecto si no encuentra la imagen
+                    img_html = '<div style="width: 80px; height: 80px; border-radius: 50%; border: 2px dashed #384358; background-color: #101E2E; display: flex; align-items: center; justify-content: center; color: #A0AEC0; font-size: 24px; flex-shrink: 0;">👤</div>'
                 # ------------------------
                 
                 if st.session_state['trabajador_resaltado'] == cedula:
@@ -448,15 +448,26 @@ with col_info:
                 
                 st.markdown(f"""
                 <div style="padding: 15px; border-radius: 8px; {borde_estilo} box-shadow: 0 4px 6px rgba(0,0,0,0.2); margin-bottom: 15px;">
-                    <h5 style="margin: 0 0 10px 0; color: {color_nombre}; font-size: 16px;">{nombre} {etiqueta_resaltado}</h5>
-                    <div style="display: flex; justify-content: space-between; font-size: 13px; color: #FFFFFF; margin-bottom: 5px;">
-                        <span><b style='color:#A0AEC0;'>C.I.:</b> {cedula}</span>
-                        <span style="text-align: right;"><b style='color:#A0AEC0;'>Cargo:</b><br>{cargo}</span>
+                    <div style="display: flex; gap: 15px; align-items: flex-start;">
+                        
+                        <div style="display: flex; flex-direction: column; align-items: center;">
+                            {img_html}
+                        </div>
+
+                        <div style="flex-grow: 1; min-width: 0;">
+                            <h5 style="margin: 0 0 8px 0; color: {color_nombre}; font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                {nombre} {etiqueta_resaltado}
+                            </h5>
+                            
+                            <div style="font-size: 13px; color: #FFFFFF; margin-bottom: 5px;">
+                                <span style="display: block; margin-bottom: 3px;"><b style='color:#A0AEC0;'>C.I.:</b> {cedula}</span>
+                                <span style="display: block; margin-bottom: 3px;"><b style='color:#A0AEC0;'>Cargo:</b> {cargo}</span>
+                                <span style="display: block;"><b style='color:#A0AEC0;'>Tel.:</b> {telefono}</span>
+                            </div>
+                        </div>
                     </div>
-                    <div style="font-size: 13px; color: #FFFFFF; margin-bottom: 10px;">
-                        <span><b style='color:#A0AEC0;'>Tel.:</b> {telefono}</span>
-                    </div>
-                    <div style="font-size: 12px; color: #E2E8F0; border-top: 1px dashed #384358; padding-top: 8px;">
+
+                    <div style="font-size: 12px; color: #E2E8F0; border-top: 1px dashed #384358; padding-top: 8px; margin-top: 10px;">
                         <span style="display: block; margin-bottom: 3px;"><b style='color:#A0AEC0;'>📍 Sector:</b> {sector}</span>
                         <span style="display: block;"><b style='color:#A0AEC0;'>🏠 Dir.:</b> {direccion}</span>
                     </div>
@@ -521,15 +532,15 @@ with col_info:
                 sector = trabajador.get('Sector', 'N/A')
                 direccion = trabajador.get('Direccion', 'N/A')
 
-                # --- CONFIGURACION DE LAS FOTOS---
+               # --- CONFIGURACION DE LAS FOTOS ---
                 bytes_foto = obtener_bytes_foto(cedula)
                 if bytes_foto:
                     # Convertimos las piezas (bytes) a código que el HTML entienda
                     b64_foto = base64.b64encode(bytes_foto).decode()
-                   
-                    img_html = f'<img src="data:image/jpeg;base64,{b64_foto}" style="width: 70px; height: 70px; border-radius: 50%; float: right; border: 2px solid #FFA586; object-fit: cover; margin-left: 10px;">'
+                    img_html = f'<img src="data:image/jpeg;base64,{b64_foto}" style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid #FFA586; object-fit: cover; flex-shrink: 0;">'
                 else:
-                    img_html = ''
+                    # Foto por defecto si no encuentra la imagen
+                    img_html = '<div style="width: 80px; height: 80px; border-radius: 50%; border: 2px dashed #384358; background-color: #101E2E; display: flex; align-items: center; justify-content: center; color: #A0AEC0; font-size: 24px; flex-shrink: 0;">👤</div>'
                 # ------------------------
                 
                 if st.session_state['trabajador_resaltado'] == cedula:
@@ -543,15 +554,26 @@ with col_info:
                 
                 st.markdown(f"""
                 <div style="padding: 15px; border-radius: 8px; {borde_estilo} box-shadow: 0 4px 6px rgba(0,0,0,0.2); margin-bottom: 15px;">
-                    <h5 style="margin: 0 0 10px 0; color: {color_nombre}; font-size: 16px;">{nombre} {etiqueta_resaltado}</h5>
-                    <div style="display: flex; justify-content: space-between; font-size: 13px; color: #FFFFFF; margin-bottom: 5px;">
-                        <span><b style='color:#A0AEC0;'>C.I.:</b> {cedula}</span>
-                        <span style="text-align: right;"><b style='color:#A0AEC0;'>Cargo:</b><br>{cargo}</span>
+                    <div style="display: flex; gap: 15px; align-items: flex-start;">
+                        
+                        <div style="display: flex; flex-direction: column; align-items: center;">
+                            {img_html}
+                        </div>
+
+                        <div style="flex-grow: 1; min-width: 0;">
+                            <h5 style="margin: 0 0 8px 0; color: {color_nombre}; font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                {nombre} {etiqueta_resaltado}
+                            </h5>
+                            
+                            <div style="font-size: 13px; color: #FFFFFF; margin-bottom: 5px;">
+                                <span style="display: block; margin-bottom: 3px;"><b style='color:#A0AEC0;'>C.I.:</b> {cedula}</span>
+                                <span style="display: block; margin-bottom: 3px;"><b style='color:#A0AEC0;'>Cargo:</b> {cargo}</span>
+                                <span style="display: block;"><b style='color:#A0AEC0;'>Tel.:</b> {telefono}</span>
+                            </div>
+                        </div>
                     </div>
-                    <div style="font-size: 13px; color: #FFFFFF; margin-bottom: 10px;">
-                        <span><b style='color:#A0AEC0;'>Tel.:</b> {telefono}</span>
-                    </div>
-                    <div style="font-size: 12px; color: #E2E8F0; border-top: 1px dashed #384358; padding-top: 8px;">
+
+                    <div style="font-size: 12px; color: #E2E8F0; border-top: 1px dashed #384358; padding-top: 8px; margin-top: 10px;">
                         <span style="display: block; margin-bottom: 3px;"><b style='color:#A0AEC0;'>📍 Sector:</b> {sector}</span>
                         <span style="display: block;"><b style='color:#A0AEC0;'>🏠 Dir.:</b> {direccion}</span>
                     </div>
