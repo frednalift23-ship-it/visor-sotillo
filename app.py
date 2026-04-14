@@ -429,11 +429,9 @@ with col_info:
                 # --- CONFIGURACION DE LAS FOTOS ---
                 bytes_foto = obtener_bytes_foto(cedula)
                 if bytes_foto:
-                    # Convertimos las piezas (bytes) a código que el HTML entienda
                     b64_foto = base64.b64encode(bytes_foto).decode()
                     img_html = f'<img src="data:image/jpeg;base64,{b64_foto}" style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid #FFA586; object-fit: cover; flex-shrink: 0;">'
                 else:
-                    # Foto por defecto si no encuentra la imagen
                     img_html = '<div style="width: 80px; height: 80px; border-radius: 50%; border: 2px dashed #384358; background-color: #101E2E; display: flex; align-items: center; justify-content: center; color: #A0AEC0; font-size: 24px; flex-shrink: 0;">👤</div>'
                 # ------------------------
                 
@@ -446,32 +444,25 @@ with col_info:
                     color_nombre = "#FFA586"
                     etiqueta_resaltado = ""
                 
-                # --- NUEVO DISEÑO DE TARJETA (FOTO IZQ, INFO DER) ---
-                st.markdown(f""" <div style="padding: 15px; border-radius: 8px; {borde_estilo} box-shadow: 0 4px 6px rgba(0,0,0,0.2); margin-bottom: 15px;">
-    <div style="display: flex; gap: 15px; align-items: flex-start;">
-        
-        <div style="display: flex; flex-direction: column; align-items: center;">
-            {img_html}
-        </div>
-
-        <div style="flex-grow: 1; min-width: 0;">
-            <h5 style="margin: 0 0 8px 0; color: {color_nombre}; font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                {nombre} {etiqueta_resaltado}
-            </h5>
-            
-            <div style="font-size: 13px; color: #FFFFFF; margin-bottom: 5px;">
-                <span style="display: block; margin-bottom: 3px;"><b style='color:#A0AEC0;'>C.I.:</b> {cedula}</span>
-                <span style="display: block; margin-bottom: 3px;"><b style='color:#A0AEC0;'>Cargo:</b> {cargo}</span>
-                <span style="display: block;"><b style='color:#A0AEC0;'>Tel.:</b> {telefono}</span>
-            </div>
-        </div>
-    </div>
-
-    <div style="font-size: 12px; color: #E2E8F0; border-top: 1px dashed #384358; padding-top: 8px; margin-top: 10px;">
-        <span style="display: block; margin-bottom: 3px;"><b style='color:#A0AEC0;'>📍 Sector:</b> {sector}</span>
-        <span style="display: block;"><b style='color:#A0AEC0;'>🏠 Dir.:</b> {direccion}</span>
-    </div>
-</div> """, unsafe_allow_html=True)
+                # --- NUEVO DISEÑO: FORMATO A PRUEBA DE INDENTACIÓN ---
+                html_tarjeta = (
+                    f'<div style="padding: 15px; border-radius: 8px; {borde_estilo} box-shadow: 0 4px 6px rgba(0,0,0,0.2); margin-bottom: 15px;">'
+                    f'<div style="display: flex; gap: 15px; align-items: flex-start;">'
+                    f'<div style="display: flex; flex-direction: column; align-items: center;">{img_html}</div>'
+                    f'<div style="flex-grow: 1; min-width: 0;">'
+                    f'<h5 style="margin: 0 0 8px 0; color: {color_nombre}; font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{nombre} {etiqueta_resaltado}</h5>'
+                    f'<div style="font-size: 13px; color: #FFFFFF; margin-bottom: 5px;">'
+                    f'<span style="display: block; margin-bottom: 3px;"><b style="color:#A0AEC0;">C.I.:</b> {cedula}</span>'
+                    f'<span style="display: block; margin-bottom: 3px;"><b style="color:#A0AEC0;">Cargo:</b> {cargo}</span>'
+                    f'<span style="display: block;"><b style="color:#A0AEC0;">Tel.:</b> {telefono}</span>'
+                    f'</div></div></div>'
+                    f'<div style="font-size: 12px; color: #E2E8F0; border-top: 1px dashed #384358; padding-top: 8px; margin-top: 10px;">'
+                    f'<span style="display: block; margin-bottom: 3px;"><b style="color:#A0AEC0;">📍 Sector:</b> {sector}</span>'
+                    f'<span style="display: block;"><b style="color:#A0AEC0;">🏠 Dir.:</b> {direccion}</span>'
+                    f'</div></div>'
+                )
+                
+                st.markdown(html_tarjeta, unsafe_allow_html=True)
                 
     # --- ESCENARIO 2: EJE Y COMUNA SELECCIONADOS ---
     elif st.session_state['eje_seleccionado'] and st.session_state['comuna_seleccionada']:
@@ -531,14 +522,12 @@ with col_info:
                 sector = trabajador.get('Sector', 'N/A')
                 direccion = trabajador.get('Direccion', 'N/A')
 
-               # --- CONFIGURACION DE LAS FOTOS ---
+             # --- CONFIGURACION DE LAS FOTOS ---
                 bytes_foto = obtener_bytes_foto(cedula)
                 if bytes_foto:
-                    # Convertimos las piezas (bytes) a código que el HTML entienda
                     b64_foto = base64.b64encode(bytes_foto).decode()
                     img_html = f'<img src="data:image/jpeg;base64,{b64_foto}" style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid #FFA586; object-fit: cover; flex-shrink: 0;">'
                 else:
-                    # Foto por defecto si no encuentra la imagen
                     img_html = '<div style="width: 80px; height: 80px; border-radius: 50%; border: 2px dashed #384358; background-color: #101E2E; display: flex; align-items: center; justify-content: center; color: #A0AEC0; font-size: 24px; flex-shrink: 0;">👤</div>'
                 # ------------------------
                 
@@ -551,49 +540,25 @@ with col_info:
                     color_nombre = "#FFA586"
                     etiqueta_resaltado = ""
                 
-               # --- NUEVO DISEÑO DE TARJETA (FOTO IZQ, INFO DER) ---
-                st.markdown(f"""
-                     <div style="padding: 15px; border-radius: 8px; {borde_estilo} box-shadow: 0 4px 6px rgba(0,0,0,0.2); margin-bottom: 15px;">
-                        <div style="display: flex; gap: 15px; align-items: flex-start;">
-        
-                            <div style="display: flex; flex-direction: column; align-items: center;">
-                                {img_html}
-                            </div>
-
-                    <div style="flex-grow: 1; min-width: 0;">
-                        <h5 style="margin: 0 0 8px 0; color: {color_nombre}; font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                            {nombre} {etiqueta_resaltado}
-                        </h5>
-            
-                        <div style="font-size: 13px; color: #FFFFFF; margin-bottom: 5px;">
-                            <span style="display: block; margin-bottom: 3px;"><b style='color:#A0AEC0;'>C.I.:</b> {cedula}</span>
-                            <span style="display: block; margin-bottom: 3px;"><b style='color:#A0AEC0;'>Cargo:</b> {cargo}</span>
-                            <span style="display: block;"><b style='color:#A0AEC0;'>Tel.:</b> {telefono}</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div style="font-size: 12px; color: #E2E8F0; border-top: 1px dashed #384358; padding-top: 8px; margin-top: 10px;">
-                    <span style="display: block; margin-bottom: 3px;"><b style='color:#A0AEC0;'>📍 Sector:</b> {sector}</span>
-                    <span style="display: block;"><b style='color:#A0AEC0;'>🏠 Dir.:</b> {direccion}</span>
-                </div>
-        </div> """, unsafe_allow_html=True)
+                # --- NUEVO DISEÑO: FORMATO A PRUEBA DE INDENTACIÓN ---
+                html_tarjeta = (
+                    f'<div style="padding: 15px; border-radius: 8px; {borde_estilo} box-shadow: 0 4px 6px rgba(0,0,0,0.2); margin-bottom: 15px;">'
+                    f'<div style="display: flex; gap: 15px; align-items: flex-start;">'
+                    f'<div style="display: flex; flex-direction: column; align-items: center;">{img_html}</div>'
+                    f'<div style="flex-grow: 1; min-width: 0;">'
+                    f'<h5 style="margin: 0 0 8px 0; color: {color_nombre}; font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{nombre} {etiqueta_resaltado}</h5>'
+                    f'<div style="font-size: 13px; color: #FFFFFF; margin-bottom: 5px;">'
+                    f'<span style="display: block; margin-bottom: 3px;"><b style="color:#A0AEC0;">C.I.:</b> {cedula}</span>'
+                    f'<span style="display: block; margin-bottom: 3px;"><b style="color:#A0AEC0;">Cargo:</b> {cargo}</span>'
+                    f'<span style="display: block;"><b style="color:#A0AEC0;">Tel.:</b> {telefono}</span>'
+                    f'</div></div></div>'
+                    f'<div style="font-size: 12px; color: #E2E8F0; border-top: 1px dashed #384358; padding-top: 8px; margin-top: 10px;">'
+                    f'<span style="display: block; margin-bottom: 3px;"><b style="color:#A0AEC0;">📍 Sector:</b> {sector}</span>'
+                    f'<span style="display: block;"><b style="color:#A0AEC0;">🏠 Dir.:</b> {direccion}</span>'
+                    f'</div></div>'
+                )
                 
-    # --- ESCENARIO 3: SÓLO EJE SELECCIONADO ---
-    elif st.session_state['eje_seleccionado']:
-        eje = st.session_state['eje_seleccionado']
-        total_eje = len(df_trabajadores[df_trabajadores['Eje'] == eje]) if not df_trabajadores.empty else 0
-        
-        st.markdown(f"""
-            <div style='background-color: #242F49; padding: 20px; border-radius: 10px; border-left: 5px solid #FFA586; box-shadow: 0 4px 6px rgba(0,0,0,0.3); margin-top: 15px;'>
-                <h4 style='color: #FFA586; margin-top: 0;'>{eje} Seleccionado</h4>
-                <p style='color: #A0AEC0;'>Has aislado la vista. <b>Haz clic en uno de los marcadores (🏠)</b> en el mapa para ver los trabajadores de esa comuna específica.</p>
-                <div style='margin-top: 15px; padding: 12px; background-color: #101E2E; border-radius: 8px; border: 1px solid #384358; text-align: center;'>
-                    <span style='font-size: 14px; color: #A0AEC0; text-transform: uppercase; letter-spacing: 0.5px;'>Total de trabajadores en este Eje</span><br>
-                    <span style='font-size: 28px; font-weight: 900; color: #FFA586;'>{total_eje}</span>
-                </div>
-            </div>
-        """, unsafe_allow_html=True)
+                st.markdown(html_tarjeta, unsafe_allow_html=True)
         
     # --- ESCENARIO 4: MAPA GENERAL ---
     else:
