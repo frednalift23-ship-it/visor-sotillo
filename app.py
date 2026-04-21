@@ -70,6 +70,10 @@ try:
     #  limpieza de datos 
     df_trabajadores = df_trabajadores.fillna('N/A') # rellena vacíos
     df_trabajadores.columns = ['Nombre', 'Cedula', 'Cargo', 'Telefono', 'Sector', 'Direccion', 'Eje', 'Comuna']
+    # --- LÍNEA DE DEPURECIÓN TEMPORAL ---
+    st.sidebar.write("### Datos Cargados (Primeros 5):")
+    st.sidebar.write(df_trabajadores[['Comuna', 'Eje']].head())
+    st.sidebar.write(f"Seleccionado: {st.session_state['comuna_seleccionada']}")
     
     # Limpieza de datos
     df_trabajadores['Nombre'] = df_trabajadores['Nombre'].astype(str).str.strip()
