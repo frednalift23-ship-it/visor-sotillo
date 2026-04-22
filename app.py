@@ -475,12 +475,13 @@ with col_info:
                 st.markdown(html_tarjeta, unsafe_allow_html=True)
                 
     # --- ESCENARIO 2: EJE Y COMUNA SELECCIONADOS ---
+    
     elif st.session_state['eje_seleccionado'] and st.session_state['comuna_seleccionada']:
         comuna_actual = st.session_state['comuna_seleccionada']
         eje = st.session_state['eje_seleccionado']
         
-        # 1. Obtenemos a la gente de esta comuna
-        df_base_area = pd.DataFrame() if df_trabajadores.empty else df_trabajadores[df_trabajadores['Comuna'] == comuna_actual]
+        # 1. Obtenemos a la gente de esta comuna (Ignorando mayúsculas/minúsculas)
+        df_base_area = pd.DataFrame() if df_trabajadores.empty else df_trabajadores[df_trabajadores['Comuna'].astype(str).str.lower().str.strip() == str(comuna_actual).lower().strip()]
         
         # 2. Creamos el Filtro Inteligente de Cargos
         if not df_base_area.empty:
