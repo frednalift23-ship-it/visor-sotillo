@@ -332,7 +332,7 @@ with col_mapa:
                     for comuna in COMUNAS_POR_EJE[eje_actual]:
                         # El Teorema de Pitágoras
                         distancia = ((comuna['lat'] - lat_c)**2 + (comuna['lon'] - lon_c)**2)**0.5
-                        if distancia < 0.005 and distancia < distancia_minima:
+                        if distancia < 0.015 and distancia < distancia_minima:
                             distancia_minima = distancia
                             comuna_clicada = comuna['nombre']
                 
@@ -571,6 +571,21 @@ with col_info:
                 )
                 
                 st.markdown(html_tarjeta, unsafe_allow_html=True)
+    # --- ESCENARIO 3: SÓLO EJE SELECCIONADO ---
+    elif st.session_state['eje_seleccionado']:
+        eje = st.session_state['eje_seleccionado']
+        total_eje = len(df_trabajadores[df_trabajadores['Eje'].astype(str).str.lower().str.strip() == str(eje).lower().strip()]) if not df_trabajadores.empty else 0
+        
+        st.markdown(f"""
+            <div style='background-color: #242F49; padding: 20px; border-radius: 10px; border-left: 5px solid #FFA586; box-shadow: 0 4px 6px rgba(0,0,0,0.3); margin-top: 15px;'>
+                <h4 style='color: #FFA586; margin-top: 0;'>{eje} Seleccionado</h4>
+                <p style='color: #A0AEC0;'>Has aislado la vista. <b>Haz clic en uno de los marcadores (🏠)</b> en el mapa para ver los trabajadores de esa comuna específica.</p>
+                <div style='margin-top: 15px; padding: 12px; background-color: #101E2E; border-radius: 8px; border: 1px solid #384358; text-align: center;'>
+                    <span style='font-size: 14px; color: #A0AEC0; text-transform: uppercase; letter-spacing: 0.5px;'>Total de trabajadores en este Eje</span><br>
+                    <span style='font-size: 28px; font-weight: 900; color: #FFA586;'>{total_eje}</span>
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
         
     # --- ESCENARIO 4: MAPA GENERAL ---
     else:
