@@ -100,7 +100,7 @@ def obtener_bytes_foto(cedula):
         drive_service = build('drive', 'v3', credentials=creds)
         
         # --- EL ARREGLO MÁGICO ---
-        # Ahora el robot busca la cédula sola, con .jpg, con .jpeg o con .png
+        # Ahora  busca la cédula sola, con .jpg, con .jpeg o con .png
         query = f"(name='{cedula}' or name='{cedula}.jpg' or name='{cedula}.jpeg' or name='{cedula}.png') and '{FOLDER_ID_FOTOS}' in parents and trashed=false"
         
         results = drive_service.files().list(q=query, fields="files(id, name)").execute()
@@ -145,41 +145,43 @@ def obtener_bytes_foto(cedula):
 
 #  Base de Datos de Comunas
 COMUNAS_POR_EJE = {
-    "Eje 1": [{"nombre": "Unidos las delicias", "lat": 10.19031, "lon": -64.63106}],
+    "Eje 1": [{"nombre": "Unidos las delicias", "lat": 10.19031, "lon": -64.63106},
+              {"nombre": "María Teresa Del Toro", "lat": 10.18140, "lon": -64.64060},
+              {"nombre": "El Gigante de América", "lat": 10.18133, "lon": -64.63978},
+              {"nombre": "Esteban Díaz", "lat": 10.19500, "lon": -64.61000}
+             ],
     "Eje 2": [
-        {"nombre": "María Teresa Del Toro", "lat": 10.18140, "lon": -64.64060},
-        {"nombre": "El Gigante de América", "lat": 10.18133, "lon": -64.63978},
-        {"nombre": "Esteban Díaz", "lat": 10.19500, "lon": -64.61000},
-        {"nombre": "Corazón de mi Patria siglo XXI", "lat": 10.19361, "lon": -64.63404}
+        {"nombre": "Corazón de mi Patria siglo XXI", "lat": 10.19361, "lon": -64.63404},
+        {"nombre": "Gran Mariscal de Ayacucho", "lat": 10.20625, "lon": -64.63781},
+        {"nombre": "Ezequiel Zamora", "lat": 10.19785, "lon": -64.61346}
+        
     ],
     "Eje 3": [
-        {"nombre": "Gran Mariscal de Ayacucho", "lat": 10.20625, "lon": -64.63781},
-        {"nombre": "Teresita De Alfonzo", "lat": 10.19690, "lon": -64.62265},
+        {"nombre": "Don Simón Rodríguez", "lat": 10.18900, "lon": -64.59200},
         {"nombre": "Por amor a Chávez", "lat": 10.19750, "lon": -64.62400}
     ],
     "Eje 4": [
-        {"nombre": "Ezequiel Zamora", "lat": 10.19785, "lon": -64.61346},
-        {"nombre": "Don Simón Rodríguez", "lat": 10.18900, "lon": -64.59200}
+         {"nombre": "Teresita De Alfonzo", "lat": 10.19690, "lon": -64.62265},
+        
     ],
     "Eje 5": [
-        {"nombre": "El Rostro de Bolívar", "lat": 10.11500, "lon": -64.58000},
-        {"nombre": "El legado De Chávez", "lat": 10.11000, "lon": -64.60000},
-        {"nombre": "Batalla de Bolívar", "lat": 10.12900, "lon": -64.59100},
-        {"nombre": "Josefa Camejo", "lat": 10.11350, "lon": -64.59200}
+        {"nombre": "Bahía pozuelos en Revolución", "lat": 10.21650, "lon": -64.63496}     
     ],
     "Eje 6": [
-        {"nombre": "Ciudad sotillo", "lat": 10.11600, "lon": -64.58400},
-        {"nombre": "Socialista Robert Serra 25", "lat": 10.14100, "lon": -64.60800}
+        {"nombre": "Guerreros De Bello Monte", "lat": 10.19350, "lon": -64.61562},
+        {"nombre": "Productiva 19 de Abril", "lat": 10.20720, "lon": -64.62840},
+        {"nombre": "El Paraíso", "lat": 10.22079, "lon": -64.64033},
+        {"nombre": "José Antonio Anzoátegui 25", "lat": 10.20884, "lon": -64.64597}
+                
     ],
     "Eje 7": [
-        {"nombre": "Bahía pozuelos en Revolución", "lat": 10.21650, "lon": -64.63496},
-        {"nombre": "Guerreros De Bello Monte", "lat": 10.19350, "lon": -64.61562}
+        {"nombre": "El Rostro de Bolívar", "lat": 10.11500, "lon": -64.58000},
+        {"nombre": "Socialista Robert Serra", "lat": 10.14100, "lon": -64.60800},
+        {"nombre": "Batalla de Bolívar", "lat": 10.12900, "lon": -64.59100},
+        {"nombre": "El legado De Chávez", "lat": 10.11000, "lon": -64.60000},
+        {"nombre": "Ciudad sotillo", "lat": 10.11600, "lon": -64.58400},
+        {"nombre": "Josefa Camejo", "lat": 10.11350, "lon": -64.59200}
     ],
-    "Eje 8": [
-        {"nombre": "José Antonio Anzoátegui 25", "lat": 10.20884, "lon": -64.64597},
-        {"nombre": "El Paraíso", "lat": 10.22079, "lon": -64.64033},
-        {"nombre": "Productiva 19 de Abril", "lat": 10.20720, "lon": -64.62840}
-    ]
 }
 
 LAT_EXTERNO = 10.2215
