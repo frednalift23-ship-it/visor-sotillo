@@ -253,6 +253,10 @@ with col_mapa:
     try:
         if eje_actual != "Personal Externo":
             gdf_ejes = gpd.read_file(RUTA_EJES)
+
+            # para ignorar el eje 8
+            gdf_ejes = gdf_ejes[gdf_ejes['nombre_eje'] != 'Eje 8']
+            #--------------------------------------------
             
             if eje_actual:
                 gdf_ejes = gdf_ejes[gdf_ejes['nombre_eje'] == eje_actual]
